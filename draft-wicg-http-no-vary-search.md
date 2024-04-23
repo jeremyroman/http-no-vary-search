@@ -19,12 +19,12 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: No-Vary-Search
+abbrev:
 category: info
 
-docname: draft-todo-yourname-protocol-latest
-submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
+docname: draft-wicg-http-no-vary-search-latest
+submissiontype: IETF
 number:
 date:
 consensus: true
@@ -45,9 +45,13 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    fullname: Jeremy Roman
+    organization: Google LLC
+    email: jbroman@chromium.org
+ -
+    fullname: Domenic Denicola
+    organization: Google LLC
+    email: d@domenic.me
 
 normative:
 
@@ -56,8 +60,7 @@ informative:
 
 --- abstract
 
-TODO Abstract
-
+A proposed HTTP header field for changing how URL search parameters impact caching.
 
 --- middle
 
