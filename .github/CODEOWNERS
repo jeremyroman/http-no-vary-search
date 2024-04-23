@@ -1,0 +1,3 @@
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-wicg-http-no-vary-search.md jbroman@chromium.org d@domenic.me
