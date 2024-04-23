@@ -9,19 +9,19 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: "Applications"
+workgroup: "HyperText Transfer Protocol"
 keyword:
  - next generation
  - unicorn
  - sparkling distributed ledger
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "HyperText Transfer Protocol"
+  type: "Working Group"
+  mail: "http-wg@hplb.hp.com"
+  arch: "https://www.ics.uci.edu/pub/ietf/http/hypermail"
+  github: "jeremyroman/http-no-vary-search"
+  latest: "https://jeremyroman.github.io/http-no-vary-search/draft-wicg-http-no-vary-search.html"
 
 author:
  -
