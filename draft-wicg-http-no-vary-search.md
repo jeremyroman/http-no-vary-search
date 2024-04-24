@@ -12,31 +12,68 @@ v: 3
 area: "Applications"
 workgroup: "HyperText Transfer Protocol"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - http
+ - caching
 venue:
-  group: "HyperText Transfer Protocol"
-  type: "Working Group"
-  mail: "http-wg@hplb.hp.com"
-  arch: "https://www.ics.uci.edu/pub/ietf/http/hypermail"
   github: "jeremyroman/http-no-vary-search"
   latest: "https://jeremyroman.github.io/http-no-vary-search/draft-wicg-http-no-vary-search.html"
 
 author:
  -
-    fullname: Jeremy Roman
-    organization: Google LLC
-    email: jbroman@chromium.org
- -
     fullname: Domenic Denicola
     organization: Google LLC
     email: d@domenic.me
+ -
+    fullname: Jeremy Roman
+    organization: Google LLC
+    email: jbroman@chromium.org
 
 normative:
+  FETCH:
+   target: https://fetch.spec.whatwg.org/
+   title: Fetch Living Standard
+   author:
+      -
+         ins: A. van Kesteren
+         name: Anne van Kesteren
+         org: Apple Inc.
+   ann: WHATWG
+  HTTP: RFC9110
+  HTTP-CACHING: RFC9111
+  STRUCTURED-FIELDS: RFC8941
+  WHATWG-ENCODING:
+   target: https://encoding.spec.whatwg.org/
+   title: Encoding Living Standard
+   author:
+      -
+         ins: A. van Kesteren
+         name: Anne van Kesteren
+         org: Apple Inc.
+   ann: WHATWG
+  WHATWG-INFRA:
+   target: https://infra.spec.whatwg.org/
+   title: Infra Living Standard
+   author:
+      -
+         ins: A. van Kesteren
+         name: Anne van Kesteren
+         org: Apple Inc.
+      -
+         ins: D. Denicola
+         name: Domenic Denicola
+         org: Google LLC
+   ann: WHATWG
+  WHATWG-URL:
+   target: https://url.spec.whatwg.org/
+   title: URL Living Standard
+   author:
+      -
+         ins: A. van Kesteren
+         name: Anne van Kesteren
+         org: Apple Inc.
+   ann: WHATWG
 
 informative:
-
 
 --- abstract
 
@@ -44,15 +81,181 @@ A proposed HTTP header field for changing how URL search parameters impact cachi
 
 --- middle
 
-# Introduction
-
-TODO Introduction
-
-
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
+This document also adopts some conventions and notation typical in WHATWG and W3C usage, especially as it relates to algorithms. See {{WHATWG-INFRA}}.
+
+# HTTP header field definition
+
+The `No-Vary-Search` HTTP header field is a structured field {{STRUCTURED-FIELDS}} whose value must be a dictionary ({{Section 3.2 of STRUCTURED-FIELDS}}).
+
+<!--
+TODO: probably give some more introductory non-normative text. Look at what other HTTP field defintions do.
+-->
+
+It has the following authoring conformance requirements:
+
+* The dictionary must only contain entries whose keys are one of `key-order`, `params`, `except`.
+* If present, the `key-order` entry's value must be a boolean ({{Section 3.3.6 of STRUCTURED-FIELDS}}).
+* If present, the `params` entry's value must be either a boolean ({{Section 3.3.6 of STRUCTURED-FIELDS}}) or an inner list ({{Section 3.1.1 of STRUCTURED-FIELDS}}).
+* If present, the `except` entry's value must be an inner list ({{Section 3.1.1 of STRUCTURED-FIELDS}}).
+* The `except` entry must only be present if the `params` entry is also present, and the `params` entry's value is the boolean value true.
+
+{:aside}
+> As always, the authoring conformance requirements are not binding on implementations. Implementations instead need to implement the processing model given by the obtain a URL search variance algorithm ({{obtain-a-url-search-variance}}).
+
+# Data model {#data-model}
+
+A _URL search variance_ consists of the following:
+
+{: vspace="0" compact}
+no-vary params
+: either the special value __wildcard__ or a list of strings
+
+vary params
+: either the special value __wildcard__ or a list of strings
+
+vary on key order
+: a boolean
+
+(((!default URL search variance)))
+The _default URL search variance_ is a URL search variance whose no-vary params is an empty list, vary params is __wildcard__, and vary on key order is true.
+
+*[default URL search variance]:
+
+The obtain a URL search variance algorithm ({{obtain-a-url-search-variance}}) ensures that all URL search variances obey the following constraints:
+
+* vary params is a list if and only if the no-vary params is __wildcard__; and
+* no-vary params is a list if and only if the vary params is __wildcard__.
+
+# Parsing
+
+## Parse a URL search variance {#parse-a-url-search-variance}
+
+*[parse a URL search variance]: #parse-a-url-search-variance
+
+(((!parse a URL search variance)))
+To _parse a URL search variance_ given _value_:
+
+1. If _value_ is null, then return the default URL search variance.
+1. If _value_'s keys contains anything other than "`key-order`", "`params`", or "`except`", then return the default URL search variance.
+1. Let _result_ be a new URL search variance.
+1. Set _result_'s vary on key order to true.
+1. If _value_\["`key-order`"] exists:
+    1. If _value_\["`key-order`"] is not a boolean, then return the default URL search variance.
+    1. Set _result_'s vary on key order to the boolean negation of _value_\["`key-order`"].
+1. If _value_\["`params`"] exists:
+    1. If _value_\["`params`"] is a boolean:
+        1. If _value_\["`params`"] is true, then:
+            1. Set _result_'s no-vary params to __wildcard__.
+            1. Set _result_'s vary params to the empty list.
+        1. Otherwise:
+            1. Set _result_'s no-vary params to the empty list.
+            1. Set _result_'s vary params to __wildcard__.
+    1. Otherwise, if _value_\["`params`"] is an array:
+        1. If any item in _value_\["`params`"] is not a string, then return the default URL search variance.
+        1. Set _result_'s no-vary params to the result of applying parse a key ({{parse-a-key}}) to each item in _value_\["`params`"].
+        1. Set _result_'s vary params to __wildcard__.
+    1. Otherwise, return the default URL search variance.
+1. If _value_\["`except`"] exists:
+    1. If _value_\["`params`"] is not true, then return the default URL search variance.
+    1. If _value_\["`except`"] is not an array, then return the default URL search variance.
+    1. If any item in _value_\["`except`"] is not a string, then return the default URL search variance.
+    1. Set _result_'s vary params to the result of applying parse a key ({{parse-a-key}}) to each item in _value_\["`except`"].
+1. Return _result_.
+
+{:aside}
+> In general, this algorithm is strict and tends to return the default URL search variance whenever it sees something it doesn't recognize. This is because the default URL search variance behavior will just cause fewer cache hits, which is an acceptable fallback behavior.
+
+{:aside}
+> The input to this algorithm is generally obtained by parsing a structured field ({{Section 4.2 of STRUCTURED-FIELDS}}) using field_type "dictionary".
+
+## Obtain a URL search variance {#obtain-a-url-search-variance}
+
+*[obtain a URL search variance]: #obtain-a-url-search-variance
+
+(((!obtain a URL search variance)))
+To _obtain a URL search variance_ given a [response](https://fetch.spec.whatwg.org/#concept-response) _response_:
+
+1. Let _fieldValue_ be the result of [getting a structured field value](https://fetch.spec.whatwg.org/#concept-header-list-get-structured-header) {{FETCH}} given \``No-Vary-Search`\` and "`dictionary`" from _response_'s header list.
+1. Return the result of parsing a URL search variance ({{parse-a-url-search-variance}}) given _fieldValue_. (((parse a URL search variance)))
+
+### Examples
+
+The following illustrates how various inputs are parsed, in terms of their impacting on the resulting no-vary params and vary params:
+
+| Input                                  | Result                                                    |
+|----------------------------------------+-----------------------------------------------------------|
+| `No-Vary-Search: params`               | no-vary params: __wildcard__<br>vary params: (empty list) |
+| `No-Vary-Search: params=("a")`         | no-vary params: « "`a`" »<br>vary params: __wildcard__    |
+| `No-Vary-Search: params, except=("x")` | no-vary params: __wildcard__<br>vary params: « "`x`" »    |
+
+The following inputs are all invalid and will cause the default URL search variance to be returned:
+
+{:compact}
+  * `No-Vary-Search: unknown-key`
+  * `No-Vary-Search: key-order="not a boolean"`
+  * `No-Vary-Search: params="not a boolean or inner list"`
+  * `No-Vary-Search: params=(not-a-string)`
+  * `No-Vary-Search: params=("a"), except=("x")`
+  * `No-Vary-Search: params=(), except=()`
+  * `No-Vary-Search: params=?0, except=("x")`
+  * `No-Vary-Search: params, except=(not-a-string)`
+  * `No-Vary-Search: params, except="not an inner list"`
+  * `No-Vary-Search: params, except=?1`
+  * `No-Vary-Search: except=("x")`
+  * `No-Vary-Search: except=()`
+
+  The following inputs are valid, but somewhat unconventional. They are shown alongside their more conventional form.
+
+| Input                                             | Conventional form                                 |
+|---------------------------------------------------+---------------------------------------------------|
+| `No-Vary-Search: params=?1`                       | `No-Vary-Search: params`                          |
+| `No-Vary-Search: key-order=?1`                    | `No-Vary-Search: key-order`                       |
+| `No-Vary-Search: params, key-order, except=("x")` | `No-Vary-Search: key-order, params, except=("x")` |
+| `No-Vary-Search: params=?0`                       | (omit the header)                                 |
+| `No-Vary-Search: params=()`                       | (omit the header)                                 |
+| `No-Vary-Search: key-order=?0`                    | (omit the header)                                 |
+
+## Parse a key {#parse-a-key}
+
+*[parse a key]: #parse-a-key
+
+(((!parse a key)))
+To _parse a key_ given an ASCII string _keyString_:
+
+  1. Let _keyBytes_ be the [isomorphic encoding](https://infra.spec.whatwg.org/#isomorphic-encode) {{WHATWG-INFRA}} of _keyString_.
+
+  1. Replace any 0x2B (+) in _keyBytes_ with 0x20 (SP).
+
+  1. Let _keyBytesDecoded_ be the [percent-decoding](https://url.spec.whatwg.org/#percent-decode) {{WHATWG-URL}} of _keyBytes_.
+
+  1. Let _keyStringDecoded_ be the [UTF-8 decoding without BOM](https://encoding.spec.whatwg.org/#utf-8-decode-without-bom) {{WHATWG-ENCODING}} of _keyBytesDecoded_.
+
+  1. Return _keyStringDecoded_.
+
+### Examples
+
+The parse a key algorithm allows encoding non-ASCII key strings in the ASCII structured header format, similar to how the [application/x-www-form-urlencoded](https://url.spec.whatwg.org/#concept-urlencoded) format {{WHATWG-URL}} allows encoding an entire entry list of keys and values in ASCII URL format. For example,
+
+~~~~http-message
+No-Vary-Search: params=("%C3%A9+%E6%B0%97")
+~~~~
+
+will result in a URL search variance whose vary params are « "`é 気`" ». As explained in a later example, the canonicalization process during equivalence testing means this will treat as equivalent URL strings such as:
+
+<!-- link "a later example" and "equivalence testing" -->
+
+* `https://example.com/?é 気=1`
+* `https://example.com/?é+気=2`
+* `https://example.com/?%C3%A9%20気=3`
+* `https://example.com/?%C3%A9+%E6%B0%97=4`
+
+and so on, since they all are [parsed](https://url.spec.whatwg.org/#concept-urlencoded-parser) {{WHATWG-URL}} to having the same key "`é 気`".
+
+# Comparing
 
 # Security Considerations
 
