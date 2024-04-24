@@ -38,8 +38,6 @@ normative:
          name: Anne van Kesteren
          org: Apple Inc.
    ann: WHATWG
-  HTTP: RFC9110
-  HTTP-CACHING: RFC9111
   STRUCTURED-FIELDS: RFC8941
   WHATWG-ENCODING:
    target: https://encoding.spec.whatwg.org/
@@ -110,7 +108,7 @@ It has the following authoring conformance requirements:
 
 A _URL search variance_ consists of the following:
 
-{: vspace="0" compact}
+{: vspace="0"}
 no-vary params
 : either the special value __wildcard__ or a list of strings
 
@@ -257,15 +255,122 @@ and so on, since they all are [parsed](https://url.spec.whatwg.org/#concept-urle
 
 # Comparing
 
+(((!equivalent modulo search variance)))
+Two [URLs](https://url.spec.whatwg.org/#concept-url) {{WHATWG-URL}} _urlA_ and _urlB_ are _equivalent modulo search variance_ given a URL search variance _searchVariance_ if the following algorithm returns true:
+
+1. If the scheme, username, password, host, port, or path of _urlA_ and _urlB_ differ, then return false.
+
+1. If _searchVariance_ is equivalent to the default URL search variance, then:
+
+    1. If _urlA_'s query equals _urlB_'s query, then return true.
+
+    1. Return false.
+
+    In this case, even URL pairs that might appear the same after running the [application/x-www-form-urlencoded parser](https://url.spec.whatwg.org/#concept-urlencoded-parser) {{WHATWG-URL}} on their queries, such as `https://example.com/a` and `https://example.com/a?`, or `https://example.com/foo?a=b&&&c` and `https://example.com/foo?a=b&c=`, will be treated as inequivalent.
+
+1. Let _searchParamsA_ and _searchParamsB_ be empty lists.
+
+1. If _wrlA_'s query is not null, then set _searchParamsA_ to the result of running the [application/x-www-form-urlencoded parser](https://url.spec.whatwg.org/#concept-urlencoded-parser) {{WHATWG-URL}} given the [isomorphic encoding](https://infra.spec.whatwg.org/#isomorphic-encode) {{WHATWG-INFRA}} of _urlA_'s query.
+
+1. If _wrlB_'s query is not null, then set _searchParamsB_ to the result of running the [application/x-www-form-urlencoded parser](https://url.spec.whatwg.org/#concept-urlencoded-parser) {{WHATWG-URL}} given the [isomorphic encoding](https://infra.spec.whatwg.org/#isomorphic-encode) {{WHATWG-INFRA}} of _urlB_'s query.
+
+1. If _searchVariance_'s no-vary params is a list, then:
+
+    1. Set _searchParamsA_ to a list containing those items _pair_ in _searchParamsA_ where _searchVariance_'s no-vary params does not contain _pair_\[0].
+
+    1. Set _searchParamsB_ to a list containing those items _pair_ in _searchParamsB_ where _searchVariance_'s no-vary params does not contain _pair_\[0].
+
+1. Otherwise, if _searchVariance_'s vary params is a list, then:
+
+    1. Set _searchParamsA_ to a list containing those items _pair_ in _searchParamsA_ where _searchVariance_'s vary params contains _pair_\[0].
+
+    1. Set _searchParamsB_ to a list containing those items _pair_ in _searchParamsB_ where _searchVariance_'s vary params contains _pair_\[0].
+
+1. If _searchVariance_'s vary on key order is false, then:
+
+    1. Let _keyLessThan_ be an algorithm taking as inputs two pairs (_keyA_, _valueA_) and (_keyB_, _valueB_), which returns whether _keyA_ is [code unit less than](https://infra.spec.whatwg.org/#code-unit-less-than) {{WHATWG-INFRA}} _keyB_.
+
+    1. Set _searchParamsA_ to the result of sorting _searchParamsA_ in ascending order with _keyLessThan_.
+
+    1. Set _searchParamsB_ to the result of sorting _searchParamsB_ in ascending order with _keyLessThan_.
+
+1. If _searchParamsA_'s size is not equal to _searchParamsB_'s size, then return false.
+
+1. Let _i_ be 0.
+
+1. While _i_ < _searchParamsA_'s size:
+
+    1. If _searchParamsA_\[_i_]\[0] does not equal _searchParamsB_\[_i_]\[0], then return false.
+
+    1. If _searchParamsA_\[_i_]\[1] does not equal _searchParamsB_\[_i_]\[1], then return false.
+
+    1. Set _i_ to _i_ + 1.
+
+1. Return true.
+
+## Examples
+
+Due to how the application/x-www-form-urlencoded parser canonicalizes query strings, there are some cases where query strings which do not appear obviously equivalent, will end up being treated as equivalent after parsing.
+
+So, for example, given any non-default value for `No-Vary-Search`, such as `No-Vary-Search: key-order`, we will have the following equivalences:
+
+{: newline="true"}
+<dl>
+  <dt>
+    <tt>https://example.com</tt><br>
+    <tt>https://example.com/?</tt>
+  </dt>
+  <dd>A null query is parsed the same as an empty string</dd>
+
+  <dt>
+    <tt>https://example.com/?a=x</tt><br>
+    <tt>https://example.com/?%61=%78</tt>
+  </dt>
+  <dd>Parsing performs percent-decoding</dd>
+
+  <dt>
+    <tt>https://example.com/?a=é</tt><br>
+    <tt>https://example.com/?a=%C3%A9</tt>
+  </dt>
+  <dd>Parsing performs percent-decoding</dd>
+
+  <dt>
+    <tt>https://example.com/?a=%f6</tt><br>
+    <tt>https://example.com/?a=%ef%bf%bd</tt>
+  </dt>
+  <dd>Both values are parsed as U+FFFD (�)</dd>
+
+  <dt>
+    <tt>https://example.com/?a=x&&&&</tt><br>
+    <tt>https://example.com/?a=x</tt>
+  </dt>
+  <dd>Parsing splits on <tt>&</tt> and discards empty strings</dd>
+
+  <dt>
+    <tt>https://example.com/?a=x</tt><br>
+    <tt>https://example.com/?a=</tt>
+  </dt>
+  <dd>Both parse as having an empty string value for <tt>a</tt></dd>
+
+  <dt>
+    <tt>https://example.com/?a=%20</tt><br>
+    <tt>https://example.com/?a=+</tt><br>
+    <tt>https://example.com/?a= &</tt>
+  </dt>
+  <dd><tt>+</tt> and <tt>%20</tt> are both parsed as U+0020 SPACE</dd>
+</dl>
+
 # Security Considerations
 
 TODO Security
 
+# Privacy Considerations
+
+TODO Privacy
 
 # IANA Considerations
 
-This document has no IANA actions.
-
+TODO IANA
 
 --- back
 
