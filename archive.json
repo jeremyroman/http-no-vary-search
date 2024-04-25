@@ -1,0 +1,83 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-04-25T00:28:27.553365+00:00",
+  "repo": "jeremyroman/http-no-vary-search",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOLx27pM5toAxh",
+      "title": "Reformat text from the WICG draft and as kramdown-rfc compatible markdown",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/pull/1",
+      "state": "MERGED",
+      "author": "jeremyroman",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The text is mostly preserved verbatim, though since auto-linking in kramdown-rfc is much more limited, not all references (especially to WHATWG Infra) are linked. The term \"list\" is replaced with \"array\" (as in RFC 8941) only in contexts where it is applied directly to the result of RFC 8941, which uses the term \"list\" to refer to a specific kind of structured field value which is not meant here (and it may be confusing which is meant, even with the remarks about WHATWG notation and conventions).\r\n\r\nSome formatting is also lost due to the constraints of the Markdown -> HTML -> RFC XML -> {HTML, TXT} pipeline used for modern Internet-Draft processing.\r\n\r\nNo additional text is yet added, e.g., related to integration with RFC 9111 (HTTP-CACHING) or IANA registration.",
+      "createdAt": "2024-04-24T16:29:08Z",
+      "updatedAt": "2024-04-24T16:30:49Z",
+      "baseRepository": "jeremyroman/http-no-vary-search",
+      "baseRefName": "main",
+      "baseRefOid": "5b451abf747f14d725eac7f15d36778ff833a638",
+      "headRepository": "jeremyroman/http-no-vary-search",
+      "headRefName": "import-wicg",
+      "headRefOid": "e957c0bc5a34bfc9ae54d0936b23e61a958495ff",
+      "closedAt": "2024-04-24T16:30:48Z",
+      "mergedAt": "2024-04-24T16:30:48Z",
+      "mergedBy": "jeremyroman",
+      "mergeCommit": {
+        "oid": "b727efd65c6ad29528369511724f0849dd31d51d"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
