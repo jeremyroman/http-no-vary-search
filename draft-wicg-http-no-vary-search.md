@@ -347,8 +347,8 @@ So, for example, given any non-default value for `No-Vary-Search`, such as `No-V
   <dd>Parsing splits on <tt>&</tt> and discards empty strings</dd>
 
   <dt>
-    <tt>https://example.com/?a=x</tt><br>
-    <tt>https://example.com/?a=</tt>
+    <tt>https://example.com/?a=</tt><br>
+    <tt>https://example.com/?a</tt>
   </dt>
   <dd>Both parse as having an empty string value for <tt>a</tt></dd>
 
