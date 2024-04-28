@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-25T00:28:27.553365+00:00",
+  "timestamp": "2024-04-28T00:29:51.128580+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -75,6 +75,34 @@
       "mergedBy": "jeremyroman",
       "mergeCommit": {
         "oid": "b727efd65c6ad29528369511724f0849dd31d51d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOLx27pM5tvJW7",
+      "title": "Correct an example",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/pull/2",
+      "state": "MERGED",
+      "author": "jeremyroman",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This example did not get copied correctly the first time.",
+      "createdAt": "2024-04-25T14:46:15Z",
+      "updatedAt": "2024-04-25T14:46:37Z",
+      "baseRepository": "jeremyroman/http-no-vary-search",
+      "baseRefName": "main",
+      "baseRefOid": "b727efd65c6ad29528369511724f0849dd31d51d",
+      "headRepository": "jeremyroman/http-no-vary-search",
+      "headRefName": "correct-example",
+      "headRefOid": "61e21296da4cf04c7f7f08ec5d4e2c03ae99e009",
+      "closedAt": "2024-04-25T14:46:34Z",
+      "mergedAt": "2024-04-25T14:46:34Z",
+      "mergedBy": "jeremyroman",
+      "mergeCommit": {
+        "oid": "ba6601abb198c0bcd758a9386d148c9fa09c0e7d"
       },
       "comments": [],
       "reviews": []
