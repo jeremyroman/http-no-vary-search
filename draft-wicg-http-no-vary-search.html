@@ -22,7 +22,7 @@
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.2.0
+    platformdirs 4.2.1
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1027,11 +1027,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">No-Vary-Search</td>
-<td class="right">April 2024</td>
+<td class="right">June 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Denicola &amp; Roman</td>
-<td class="center">Expires 27 October 2024</td>
+<td class="center">Expires 6 December 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1044,12 +1044,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-wicg-http-no-vary-search-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-04-25" class="published">25 April 2024</time>
+<time datetime="2024-06-04" class="published">4 June 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-10-27">27 October 2024</time></dd>
+<dd class="expires"><time datetime="2024-12-06">6 December 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1098,7 +1098,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 October 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1178,7 +1178,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
@@ -1762,7 +1770,8 @@ In this case, even URL pairs that might appear the same after running the <a hre
       <h2 id="name-security-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-6-1">TODO Security<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The main risk to be aware of is the impact of mismatched URLs. In particular, this could cause the user to see a response that was originally fetched from a URL different from the one displayed when they hovered a link, or the URL displayed in the URL bar.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">However, since the impact is limited to query parameters, this does not cross the relevant security boundary, which is the <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin">origin</a> <span>[<a href="#HTML" class="cite xref">HTML</a>]</span>. (Or perhaps just the <a href="https://url.spec.whatwg.org/#concept-url-host">host</a>, from <a href="https://url.spec.whatwg.org/#url-rendering-simplification">the perspective of web browser security UI</a>. <span>[<a href="#WHATWG-URL" class="cite xref">WHATWG-URL</a>]</span>) Indeed, we have already given origins complete control over how they present the (URL, reponse body) pair, including on the client side via technology such as <a href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-history-replacestate">history.replaceState()</a> or service workers.<a href="#section-6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">
@@ -1770,7 +1779,7 @@ In this case, even URL pairs that might appear the same after running the <a hre
       <h2 id="name-privacy-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-7-1">TODO Privacy<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">This proposal is adjacent to the highly-privacy-relevant space of <a href="https://privacycg.github.io/nav-tracking-mitigations/#terminology">navigational tracking</a>, which often uses query parameters to pass along user identifiers. However, we believe this proposal itself does not have privacy impacts. It does not interfere with <a href="https://privacycg.github.io/nav-tracking-mitigations/#deployed-mitigations">existing navigational tracking mitigations</a>, or any known future ones being contemplated. Indeed, if a page were to encode user identifiers in its URL, the only ability this proposal gives is to <em>reduce</em> such user tracking by preventing server processing of such user IDs (since the server is bypassed in favor of the cache). <span>[<a href="#NAV-TRACKING-MITIGATIONS" class="cite xref">NAV-TRACKING-MITIGATIONS</a>]</span><a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1781,47 +1790,71 @@ In this case, even URL pairs that might appear the same after running the <a hre
 <p id="section-8-1">TODO IANA<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
 <section id="section-9">
-      <h2 id="name-normative-references">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-9.1">
+        <h3 id="name-normative-references">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="FETCH">[FETCH]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">van Kesteren, A.</span>, <span class="refTitle">"Fetch Living Standard"</span>, <span>n.d.</span>, <span>&lt;<a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>&gt;</span>. <span class="annotation">WHATWG</span>
-      </dd>
+        </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STRUCTURED-FIELDS">[STRUCTURED-FIELDS]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Nottingham, M.</span> and <span class="refAuthor">P. Kamp</span>, <span class="refTitle">"Structured Field Values for HTTP"</span>, <span class="seriesInfo">RFC 8941</span>, <span class="seriesInfo">DOI 10.17487/RFC8941</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8941">https://www.rfc-editor.org/rfc/rfc8941</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WHATWG-ENCODING">[WHATWG-ENCODING]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">van Kesteren, A.</span>, <span class="refTitle">"Encoding Living Standard"</span>, <span>n.d.</span>, <span>&lt;<a href="https://encoding.spec.whatwg.org/">https://encoding.spec.whatwg.org/</a>&gt;</span>. <span class="annotation">WHATWG</span>
-      </dd>
+        </dd>
 <dd class="break"></dd>
 <dt id="WHATWG-INFRA">[WHATWG-INFRA]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">van Kesteren, A.</span> and <span class="refAuthor">D. Denicola</span>, <span class="refTitle">"Infra Living Standard"</span>, <span>n.d.</span>, <span>&lt;<a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>&gt;</span>. <span class="annotation">WHATWG</span>
-      </dd>
+        </dd>
 <dd class="break"></dd>
 <dt id="WHATWG-URL">[WHATWG-URL]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">van Kesteren, A.</span>, <span class="refTitle">"URL Living Standard"</span>, <span>n.d.</span>, <span>&lt;<a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>&gt;</span>. <span class="annotation">WHATWG</span>
-      </dd>
+        </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
+<div id="sec-informative-references">
+<section id="section-9.2">
+        <h3 id="name-informative-references">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="HTML">[HTML]</dt>
+        <dd>
+<span class="refAuthor">van Kesteren, A.</span>, <span class="refTitle">"HTML Living Standard"</span>, <span>n.d.</span>, <span>&lt;<a href="https://html.spec.whatwg.org/">https://html.spec.whatwg.org/</a>&gt;</span>. <span class="annotation">WHATWG</span>
+        </dd>
+<dd class="break"></dd>
+<dt id="NAV-TRACKING-MITIGATIONS">[NAV-TRACKING-MITIGATIONS]</dt>
+      <dd>
+<span class="refAuthor">Snyder, P.</span> and <span class="refAuthor">J. Yasskin</span>, <span class="refTitle">"Navigational-Tracking Mitigations"</span>, <span>n.d.</span>, <span>&lt;<a href="https://privacycg.github.io/nav-tracking-mitigations/">https://privacycg.github.io/nav-tracking-mitigations/</a>&gt;</span>. <span class="annotation">W3C Privacy CG</span>
+        </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
 <div id="acknowledgments">
 <section id="appendix-A">
       <h2 id="name-acknowledgments">
