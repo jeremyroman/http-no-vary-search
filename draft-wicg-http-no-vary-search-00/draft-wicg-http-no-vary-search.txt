@@ -5,7 +5,7 @@
 HyperText Transfer Protocol                                  D. Denicola
 Internet-Draft                                                  J. Roman
 Intended status: Informational                                Google LLC
-Expires: 26 October 2024                                   24 April 2024
+Expires: 6 December 2024                                     4 June 2024
 
 
                              No-Vary-Search
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 October 2024.
+   This Internet-Draft will expire on 6 December 2024.
 
 Copyright Notice
 
@@ -466,8 +466,8 @@ Table of Contents
    https://example.com/?a=x
       Parsing splits on & and discards empty strings
 
-   https://example.com/?a=x
    https://example.com/?a=
+   https://example.com/?a
       Both parse as having an empty string value for a
 
    https://example.com/?a=%20
