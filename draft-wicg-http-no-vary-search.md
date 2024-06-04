@@ -72,6 +72,28 @@ normative:
    ann: WHATWG
 
 informative:
+  HTML:
+   target: https://html.spec.whatwg.org/
+   title: HTML Living Standard
+   author:
+      -
+         ins: A. van Kesteren
+         name: Anne van Kesteren
+         org: Apple Inc.
+   ann: WHATWG
+  NAV-TRACKING-MITIGATIONS:
+   target: https://privacycg.github.io/nav-tracking-mitigations/
+   title: Navigational-Tracking Mitigations
+   author:
+      -
+         ins: P. Snyder
+         name: Pete Snyder
+         org: Brave Software, Inc.
+      -
+         ins: J. Yasskin
+         name: Jeffrey Yasskin
+         org: Google LLC
+   ann: W3C Privacy CG
 
 --- abstract
 
@@ -362,11 +384,13 @@ So, for example, given any non-default value for `No-Vary-Search`, such as `No-V
 
 # Security Considerations
 
-TODO Security
+The main risk to be aware of is the impact of mismatched URLs. In particular, this could cause the user to see a response that was originally fetched from a URL different from the one displayed when they hovered a link, or the URL displayed in the URL bar.
+
+However, since the impact is limited to query parameters, this does not cross the relevant security boundary, which is the [origin](https://html.spec.whatwg.org/multipage/browsers.html#concept-origin) {{HTML}}. (Or perhaps just the [host](https://url.spec.whatwg.org/#concept-url-host), from [the perspective of web browser security UI](https://url.spec.whatwg.org/#url-rendering-simplification). {{WHATWG-URL}}) Indeed, we have already given origins complete control over how they present the (URL, reponse body) pair, including on the client side via technology such as [history.replaceState()](https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-history-replacestate) or service workers.
 
 # Privacy Considerations
 
-TODO Privacy
+This proposal is adjacent to the highly-privacy-relevant space of [navigational tracking](https://privacycg.github.io/nav-tracking-mitigations/#terminology), which often uses query parameters to pass along user identifiers. However, we believe this proposal itself does not have privacy impacts. It does not interfere with [existing navigational tracking mitigations](https://privacycg.github.io/nav-tracking-mitigations/#deployed-mitigations), or any known future ones being contemplated. Indeed, if a page were to encode user identifiers in its URL, the only ability this proposal gives is to *reduce* such user tracking by preventing server processing of such user IDs (since the server is bypassed in favor of the cache). {{NAV-TRACKING-MITIGATIONS}}
 
 # IANA Considerations
 
