@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-04T00:28:21.429971+00:00",
+  "timestamp": "2024-06-06T00:28:12.019269+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -103,6 +103,34 @@
       "mergedBy": "jeremyroman",
       "mergeCommit": {
         "oid": "ba6601abb198c0bcd758a9386d148c9fa09c0e7d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOLx27pM5xdp2q",
+      "title": "Replicate updated security & privacy considerations to IETF draft.",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/pull/3",
+      "state": "MERGED",
+      "author": "jeremyroman",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This was updated in the upstream WICG document: https://github.com/WICG/nav-speculation/commit/29cfa18ac33d299ee93032e0cd2be085e9608257",
+      "createdAt": "2024-06-04T19:13:37Z",
+      "updatedAt": "2024-06-04T19:13:58Z",
+      "baseRepository": "jeremyroman/http-no-vary-search",
+      "baseRefName": "main",
+      "baseRefOid": "ba6601abb198c0bcd758a9386d148c9fa09c0e7d",
+      "headRepository": "jeremyroman/http-no-vary-search",
+      "headRefName": "replicate-sec-priv",
+      "headRefOid": "fec10a16ba2b10324ab4e7fa1e971ae8122d3a84",
+      "closedAt": "2024-06-04T19:13:53Z",
+      "mergedAt": "2024-06-04T19:13:53Z",
+      "mergedBy": "jeremyroman",
+      "mergeCommit": {
+        "oid": "d6c5beac723e9416ca3c7fdd1313b668d3d1bf01"
       },
       "comments": [],
       "reviews": []
