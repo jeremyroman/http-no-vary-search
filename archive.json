@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-04T00:33:29.642986+00:00",
+  "timestamp": "2024-08-06T00:30:16.800314+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -49,7 +49,72 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 4,
+      "id": "I_kwDOLx27pM6R4L5l",
+      "title": "Double-quoting",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/issues/4",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft includes this text in an example:\r\n\r\n>  \u00ab \"\u00e9 \u6c17\" \u00bb\r\n\r\nThat's two layers of quoting.  One layer is probably enough.",
+      "createdAt": "2024-08-05T01:40:06Z",
+      "updatedAt": "2024-08-05T01:40:06Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOLx27pM6R4MI6",
+      "title": "Add an introduction",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/issues/5",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft doesn't bother with any of the usual frippery that is in other similar documents, like establishing what the problem is, why it is important to solve, and providing an overview of the solution.  That's going to be challenging.",
+      "createdAt": "2024-08-05T01:41:18Z",
+      "updatedAt": "2024-08-05T01:41:18Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOLx27pM6R4M12",
+      "title": "Extensibility, not",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/issues/6",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "> The dictionary must only contain entries whose keys are one of key-order, params, except.\r\n\r\nIf this is a MUST (is it?) then this will make it impossible to extend the field semantics.  An analysis of why this is acceptable is probably wise.\r\n\r\nNote: I don't think that you need to establish an IANA registry for keys or anything like that.  This is a self-contained proposal that doesn't _need_ extensibility to function.  However, it would be good to establish clear rules for what an implementation does when an extension is present.  Right now, it seems to be that it completely disables the special logic that this draft introduces.  That seems wrong to me.  It would be more robust to ignore keys that are not supported.",
+      "createdAt": "2024-08-05T01:44:51Z",
+      "updatedAt": "2024-08-05T01:44:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOLx27pM6R4Odc",
+      "title": "Is the default equivalent to an empty field?",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/issues/7",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The definition for the default says:\r\n\r\n>  The default URL search variance is a URL search variance whose no-vary params is an empty list, vary params is wildcard, and vary on key order is true.\r\n\r\nThis is something that can be explicitly specified.  Indeed, the processing returns the default if the field is specified but empty.\r\n\r\nBut specifying the field indicates an understanding of the advanced matching algorithm, which might imply that the caller wishes to engage the algorithm.  That would mean that `https://example.com/?q&&&&` is equivalent to `https://example.com/?q&&`, where it wouldn't be otherwise.\r\n\r\nIs it useful to distinguish an expression that engages the algorithm vs. one that does not?  Yes, the answer could be \"we fall back to default processing, which is safe\", but it seems like that's a logic error and somewhat surprising.",
+      "createdAt": "2024-08-05T01:52:33Z",
+      "updatedAt": "2024-08-05T01:52:33Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
