@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-06T00:30:16.800314+00:00",
+  "timestamp": "2024-08-08T00:30:26.029572+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -62,9 +62,24 @@
       "labels": [],
       "body": "The draft includes this text in an example:\r\n\r\n>  \u00ab \"\u00e9 \u6c17\" \u00bb\r\n\r\nThat's two layers of quoting.  One layer is probably enough.",
       "createdAt": "2024-08-05T01:40:06Z",
-      "updatedAt": "2024-08-05T01:40:06Z",
+      "updatedAt": "2024-08-08T00:02:11Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jeremyroman",
+          "authorAssociation": "OWNER",
+          "body": "This isn't actually two layers of quoting, though it may be an artifact of WHATWG convention (namely, the [list literal shorthand](https://infra.spec.whatwg.org/#lists)), i.e., the variance has exactly one vary param, which is the string \"\u00e9 \u6c17\".\r\n\r\nIf this notation is unfamiliar to readers of IETF documents, it could be called out more explicitly in _Conventions and Definitions_ (which does link to the WHATWG infra document) or changed to some other notation.",
+          "createdAt": "2024-08-07T18:17:40Z",
+          "updatedAt": "2024-08-07T18:17:40Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "body": "That's a list?  Wow, that wasn't obvious.  I've seen `[]` or `()` used in other contexts with considerable success.",
+          "createdAt": "2024-08-08T00:02:11Z",
+          "updatedAt": "2024-08-08T00:02:11Z"
+        }
+      ]
     },
     {
       "number": 5,
@@ -94,9 +109,24 @@
       "labels": [],
       "body": "> The dictionary must only contain entries whose keys are one of key-order, params, except.\r\n\r\nIf this is a MUST (is it?) then this will make it impossible to extend the field semantics.  An analysis of why this is acceptable is probably wise.\r\n\r\nNote: I don't think that you need to establish an IANA registry for keys or anything like that.  This is a self-contained proposal that doesn't _need_ extensibility to function.  However, it would be good to establish clear rules for what an implementation does when an extension is present.  Right now, it seems to be that it completely disables the special logic that this draft introduces.  That seems wrong to me.  It would be more robust to ignore keys that are not supported.",
       "createdAt": "2024-08-05T01:44:51Z",
-      "updatedAt": "2024-08-05T01:44:51Z",
+      "updatedAt": "2024-08-08T00:01:17Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jeremyroman",
+          "authorAssociation": "OWNER",
+          "body": "/cc @domenic (who wrote this precise wording)\r\n\r\n> If this is a MUST (is it?) then this will make it impossible to extend the field semantics. An analysis of why this is acceptable is probably wise.\r\n\r\nI'm not personally very familiar with how (in IETF) authoring conformance requirements bind future versions of a specification, or other documents, to extend it. The intent here, as I understand it, is simply to declare to authors that this document does not define the behavior of any field values which include other keys -- and an author using additional keys would need to be in conformance with some other, newer, document.\r\n\r\n> Right now, it seems to be that it completely disables the special logic that this draft introduces. That seems wrong to me. It would be more robust to ignore keys that are not supported.\r\n\r\nI'm not certain that is the case, but am open to discussing. It seems to me that future extensions might:\r\n\r\n1. Make two responses match, which previously did not. (e.g., a new `key-ascii-case` token, which treated query param keys as case-insensitive)\r\n2. Make two responses not match, which previous did. (e.g., a new `respect-exact-values` token, which required values for query params not ignored to match byte-wise, and not treat `+` and `%20`, or `a` and `%41`, as equivalent)\r\n3. Some combination of the previous two.\r\n\r\nFor extensions of the first type, I agree, ignoring unrecognized keys is more robust in that it lets authors get as close to the intended meaning as possible within the client's support.\r\n\r\nFor extensions of the second or third type, though, ignoring unrecognized keys could result in a cache producing an erroneous cache hit \u2013 and a user seeing an incorrect resource.\r\n\r\nSince the key is by definition unknown at the time this specification is written, even if most extensions would be of the first type it seems safer to assume that some extensions might be of the second or third type, and the risk of incorrect cache behavior might make such an extension dangerous to adopt if unrecognized parameters are ignored by earlier clients.\r\n\r\nThere might be ways to sidestep this, like some way of marking which extension parameters should be ignored if unknown, or giving HTTP some better feature detection mechanism (but that's an enormous challenge considering the presence of proxies and caches), but none seem an obvious win to me.",
+          "createdAt": "2024-08-07T20:51:29Z",
+          "updatedAt": "2024-08-07T20:51:29Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "body": "That seems like a good analysis.  My conjecture (take that for what it is), is that having any extension be *more* greedy (matching more URLs) is the most useful path to take.  Your case-folding example seems like it is more reasonable than any attempt to tighten up.\r\n\r\nIs it possible for the other case to specify a backward-compatible exact-matching.  Maybe by using `params` in the least permissive mode, with a parallel `exact-params` parameter?",
+          "createdAt": "2024-08-08T00:01:16Z",
+          "updatedAt": "2024-08-08T00:01:16Z"
+        }
+      ]
     },
     {
       "number": 7,
@@ -110,9 +140,17 @@
       "labels": [],
       "body": "The definition for the default says:\r\n\r\n>  The default URL search variance is a URL search variance whose no-vary params is an empty list, vary params is wildcard, and vary on key order is true.\r\n\r\nThis is something that can be explicitly specified.  Indeed, the processing returns the default if the field is specified but empty.\r\n\r\nBut specifying the field indicates an understanding of the advanced matching algorithm, which might imply that the caller wishes to engage the algorithm.  That would mean that `https://example.com/?q&&&&` is equivalent to `https://example.com/?q&&`, where it wouldn't be otherwise.\r\n\r\nIs it useful to distinguish an expression that engages the algorithm vs. one that does not?  Yes, the answer could be \"we fall back to default processing, which is safe\", but it seems like that's a logic error and somewhat surprising.",
       "createdAt": "2024-08-05T01:52:33Z",
-      "updatedAt": "2024-08-05T01:52:33Z",
+      "updatedAt": "2024-08-07T20:22:35Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jeremyroman",
+          "authorAssociation": "OWNER",
+          "body": "/cc @domenic @liviutinta\r\n\r\n> This is something that can be explicitly specified. Indeed, the processing returns the default if the field is specified but empty.\r\n\r\nYes, it can be explicitly specified. I'm not sure whether all HTTP implementations would permit an empty field ([RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2) disavows them for the most part afaict), but values such as `key-order=?0` or `params=()` would do the trick.\r\n\r\n> But specifying the field indicates an understanding of the advanced matching algorithm, which might imply that the caller wishes to engage the algorithm. That would mean that https://example.com/?q&&&& is equivalent to https://example.com/?q&&, where it wouldn't be otherwise.\r\n\r\nAs currently written, there is no way of getting _just_ the decoding-related behavior (like spurious ampersands and the `+` vs `%20` distinction), though you could get close by varying only on a nonsense parameter (`No-Vary-Search: params=(\"__iamneverspecifiedintherealworld\")`). If anyone wanted this, we could add a way of expressing it (and suppressing this revert-to-default logic), such as `No-Vary-Search: encoding-only`.\r\n\r\n> Is it useful to distinguish an expression that engages the algorithm vs. one that does not? Yes, the answer could be \"we fall back to default processing, which is safe\", but it seems like that's a logic error and somewhat surprising.\r\n\r\nI'm not sure what it means to be a logic error here. My current thinking is that the value of such cases is unclear but there is risk of confusion arising from an empty and absent header having different meanings (or a facially meaningless value having a different meaning from an absent one).\r\n\r\nIt seems to me that an accidental cache miss is much better than an accidental cache hit (as you note, it's safe), so if we're going to have a single such behavior, the current, exact matching logic is the better fallback even if it compromises conceptual purity a little.",
+          "createdAt": "2024-08-07T20:22:33Z",
+          "updatedAt": "2024-08-07T20:22:33Z"
+        }
+      ]
     }
   ],
   "pulls": [
