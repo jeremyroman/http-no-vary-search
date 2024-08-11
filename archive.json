@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-08T00:30:26.029572+00:00",
+  "timestamp": "2024-08-11T00:34:12.663512+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -53,7 +53,7 @@
     {
       "number": 4,
       "id": "I_kwDOLx27pM6R4L5l",
-      "title": "Double-quoting",
+      "title": "WHATWG list notation \u00ab \u00bb is unfamiliar to some readers",
       "url": "https://github.com/jeremyroman/http-no-vary-search/issues/4",
       "state": "OPEN",
       "author": "martinthomson",
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "The draft includes this text in an example:\r\n\r\n>  \u00ab \"\u00e9 \u6c17\" \u00bb\r\n\r\nThat's two layers of quoting.  One layer is probably enough.",
       "createdAt": "2024-08-05T01:40:06Z",
-      "updatedAt": "2024-08-08T00:02:11Z",
+      "updatedAt": "2024-08-08T13:57:17Z",
       "closedAt": null,
       "comments": [
         {
@@ -109,7 +109,7 @@
       "labels": [],
       "body": "> The dictionary must only contain entries whose keys are one of key-order, params, except.\r\n\r\nIf this is a MUST (is it?) then this will make it impossible to extend the field semantics.  An analysis of why this is acceptable is probably wise.\r\n\r\nNote: I don't think that you need to establish an IANA registry for keys or anything like that.  This is a self-contained proposal that doesn't _need_ extensibility to function.  However, it would be good to establish clear rules for what an implementation does when an extension is present.  Right now, it seems to be that it completely disables the special logic that this draft introduces.  That seems wrong to me.  It would be more robust to ignore keys that are not supported.",
       "createdAt": "2024-08-05T01:44:51Z",
-      "updatedAt": "2024-08-08T00:01:17Z",
+      "updatedAt": "2024-08-08T04:05:26Z",
       "closedAt": null,
       "comments": [
         {
@@ -125,6 +125,20 @@
           "body": "That seems like a good analysis.  My conjecture (take that for what it is), is that having any extension be *more* greedy (matching more URLs) is the most useful path to take.  Your case-folding example seems like it is more reasonable than any attempt to tighten up.\r\n\r\nIs it possible for the other case to specify a backward-compatible exact-matching.  Maybe by using `params` in the least permissive mode, with a parallel `exact-params` parameter?",
           "createdAt": "2024-08-08T00:01:16Z",
           "updatedAt": "2024-08-08T00:01:16Z"
+        },
+        {
+          "author": "domenic",
+          "authorAssociation": "NONE",
+          "body": "I'm not sure I understand the concern here. If we add new options, we'll publish a new specification that will supersede this one, and conformance with the old one won't matter.",
+          "createdAt": "2024-08-08T01:23:52Z",
+          "updatedAt": "2024-08-08T01:23:52Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "body": "@domenic, what you specify here will determine to a large extent what options you have when defining the new specification.  It pays to think about what might happen at that time.  Defining new parameters is clearly one of the possible paths available, but the present specification effectively causes the field to be ignored if a client receives a parameter they don't understand.  That's safe, but does it create the set up the right conditions for evolving the specification later? ",
+          "createdAt": "2024-08-08T04:05:25Z",
+          "updatedAt": "2024-08-08T04:05:25Z"
         }
       ]
     },
