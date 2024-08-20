@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-18T00:33:32.580355+00:00",
+  "timestamp": "2024-08-20T00:30:39.466718+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -109,7 +109,7 @@
       "labels": [],
       "body": "> The dictionary must only contain entries whose keys are one of key-order, params, except.\r\n\r\nIf this is a MUST (is it?) then this will make it impossible to extend the field semantics.  An analysis of why this is acceptable is probably wise.\r\n\r\nNote: I don't think that you need to establish an IANA registry for keys or anything like that.  This is a self-contained proposal that doesn't _need_ extensibility to function.  However, it would be good to establish clear rules for what an implementation does when an extension is present.  Right now, it seems to be that it completely disables the special logic that this draft introduces.  That seems wrong to me.  It would be more robust to ignore keys that are not supported.",
       "createdAt": "2024-08-05T01:44:51Z",
-      "updatedAt": "2024-08-16T19:52:47Z",
+      "updatedAt": "2024-08-19T06:26:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -146,6 +146,13 @@
           "body": "(I'm assuming that how the specification directs implementations to behave on unknown input matters here more than the author conformance requirements.)\r\n\r\nIs there particular good/bad experiences with past HTTP header fields that should guide us here? At the moment it seems we're basically up to abstract conjecture.\r\n\r\nI agree that ignoring unrecognized things (details TBD) makes it easier to roll out use of extensions in the future, at the cost of constraining those extensions (unless we add complexity to mitigate that), and that we could probably make that change safely at this point if everyone agreed (what is the best process for that?) this was a worthwhile tradeoff to make.",
           "createdAt": "2024-08-16T19:52:47Z",
           "updatedAt": "2024-08-16T19:52:47Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "body": "A good number of fields already work the same way, with considerable success.  Offhand, that includes Cache-Control, Content-Security-Policy, and Permissions-Policy.",
+          "createdAt": "2024-08-19T06:26:30Z",
+          "updatedAt": "2024-08-19T06:26:30Z"
         }
       ]
     },
