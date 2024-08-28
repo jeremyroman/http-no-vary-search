@@ -125,6 +125,8 @@ It has the following authoring conformance requirements:
 
 {:aside}
 > As always, the authoring conformance requirements are not binding on implementations. Implementations instead need to implement the processing model given by the obtain a URL search variance algorithm ({{obtain-a-url-search-variance}}).
+>
+> It is possible that a future version of this specification, or another specification which extends this one, loosens one or more of the authoring conformance requirements, for example, by assigning semantics to dictionary keys not defined in this specification.
 
 # Data model {#data-model}
 
@@ -160,7 +162,6 @@ The obtain a URL search variance algorithm ({{obtain-a-url-search-variance}}) en
 To _parse a URL search variance_ given _value_:
 
 1. If _value_ is null, then return the default URL search variance.
-1. If _value_'s keys contains anything other than "`key-order`", "`params`", or "`except`", then return the default URL search variance.
 1. Let _result_ be a new URL search variance.
 1. Set _result_'s vary on key order to true.
 1. If _value_\["`key-order`"] exists:
@@ -188,6 +189,8 @@ To _parse a URL search variance_ given _value_:
 
 {:aside}
 > In general, this algorithm is strict and tends to return the default URL search variance whenever it sees something it doesn't recognize. This is because the default URL search variance behavior will just cause fewer cache hits, which is an acceptable fallback behavior.
+>
+> However, unrecognized keys at the top level are ignored, to make it easier to extend this specification in the future. To avoid misbehavior with existing client software, such extensions will likely expand, rather than reduce, the set of requests that a cached response can match.
 
 {:aside}
 > The input to this algorithm is generally obtained by parsing a structured field ({{Section 4.2 of STRUCTURED-FIELDS}}) using field_type "dictionary".
