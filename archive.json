@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-27T00:31:33.382855+00:00",
+  "timestamp": "2024-08-29T00:31:45.885137+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -265,6 +265,54 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOLx27pM55ueD8",
+      "title": "Ignore unrecognized dictionary keys",
+      "url": "https://github.com/jeremyroman/http-no-vary-search/pull/8",
+      "state": "OPEN",
+      "author": "jeremyroman",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses #6.",
+      "createdAt": "2024-08-28T15:20:26Z",
+      "updatedAt": "2024-08-28T19:19:42Z",
+      "baseRepository": "jeremyroman/http-no-vary-search",
+      "baseRefName": "main",
+      "baseRefOid": "d6c5beac723e9416ca3c7fdd1313b668d3d1bf01",
+      "headRepository": "jeremyroman/http-no-vary-search",
+      "headRefName": "nvs-ignore-unrecognized-keys",
+      "headRefOid": "5f70b0dc7532a1034a7551a298cd132431c7d133",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "jeremyroman",
+          "authorAssociation": "OWNER",
+          "body": "@domenic @martinthomson wdyt?\r\n\r\nI think I'm okay with loosening this slightly. Even though it restricts some forms of extensibility, as Martin points out it may make it easier to deploy the more likely ways for this spec to be extended.\r\n\r\nIf this looks good, I'll backport the text to the WICG repository as well. I also have a [Chromium CL](https://chromium-review.googlesource.com/c/chromium/src/+/5800476) to apply the change to Chrome. I'm pretty sure this will be safe with current usage, but I have a histogram to detect existing usage of unrecognized keys so we can investigate if it turns out to be happening in the wild already.",
+          "createdAt": "2024-08-28T15:29:30Z",
+          "updatedAt": "2024-08-28T15:29:30Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOLx27pM6HIOKc",
+          "commit": {
+            "abbreviatedOid": "5f70b0d"
+          },
+          "author": "domenic",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-28T19:19:42Z",
+          "updatedAt": "2024-08-28T19:19:42Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
