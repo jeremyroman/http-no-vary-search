@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-29T00:31:45.885137+00:00",
+  "timestamp": "2024-09-01T00:38:55.804356+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -278,7 +278,7 @@
       "labels": [],
       "body": "Addresses #6.",
       "createdAt": "2024-08-28T15:20:26Z",
-      "updatedAt": "2024-08-28T19:19:42Z",
+      "updatedAt": "2024-08-29T03:40:42Z",
       "baseRepository": "jeremyroman/http-no-vary-search",
       "baseRefName": "main",
       "baseRefOid": "d6c5beac723e9416ca3c7fdd1313b668d3d1bf01",
@@ -311,6 +311,26 @@
           "createdAt": "2024-08-28T19:19:42Z",
           "updatedAt": "2024-08-28T19:19:42Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOLx27pM6HKR1i",
+          "commit": {
+            "abbreviatedOid": "5f70b0d"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-08-29T03:40:38Z",
+          "updatedAt": "2024-08-29T03:40:42Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "This is helpful as far as framing goes, but it is a bit of a forward-looking statement.\r\n\r\nThe pattern I've seen more often is \"Search variance MAY contain parameters other than those listed in this specification.  A recipient MUST ignore any parameter that it does not understand.\"",
+              "createdAt": "2024-08-29T03:40:38Z",
+              "updatedAt": "2024-08-29T03:40:42Z"
+            }
+          ]
         }
       ]
     }
