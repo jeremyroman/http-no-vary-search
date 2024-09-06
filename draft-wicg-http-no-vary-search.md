@@ -117,16 +117,15 @@ TODO: probably give some more introductory non-normative text. Look at what othe
 
 It has the following authoring conformance requirements:
 
-* The dictionary must only contain entries whose keys are one of `key-order`, `params`, `except`.
 * If present, the `key-order` entry's value must be a boolean ({{Section 3.3.6 of STRUCTURED-FIELDS}}).
 * If present, the `params` entry's value must be either a boolean ({{Section 3.3.6 of STRUCTURED-FIELDS}}) or an inner list ({{Section 3.1.1 of STRUCTURED-FIELDS}}).
 * If present, the `except` entry's value must be an inner list ({{Section 3.1.1 of STRUCTURED-FIELDS}}).
 * The `except` entry must only be present if the `params` entry is also present, and the `params` entry's value is the boolean value true.
 
+The dictionary may contain entries whose keys are not one of `key-order`, `params`, and `except`, but their meaning is not defined by this specification. Implementations of this specification will ignore such entries (but future documents may assign meaning to such entries).
+
 {:aside}
 > As always, the authoring conformance requirements are not binding on implementations. Implementations instead need to implement the processing model given by the obtain a URL search variance algorithm ({{obtain-a-url-search-variance}}).
->
-> It is possible that a future version of this specification, or another specification which extends this one, loosens one or more of the authoring conformance requirements, for example, by assigning semantics to dictionary keys not defined in this specification.
 
 # Data model {#data-model}
 
