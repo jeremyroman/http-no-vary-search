@@ -5,7 +5,7 @@
 HyperText Transfer Protocol                                  D. Denicola
 Internet-Draft                                                  J. Roman
 Intended status: Informational                                Google LLC
-Expires: 1 March 2025                                     28 August 2024
+Expires: 10 March 2025                                  6 September 2024
 
 
                              No-Vary-Search
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 March 2025.
+   This Internet-Draft will expire on 10 March 2025.
 
 Copyright Notice
 
@@ -102,9 +102,6 @@ Table of Contents
 
    It has the following authoring conformance requirements:
 
-   *  The dictionary must only contain entries whose keys are one of
-      key-order, params, except.
-
    *  If present, the key-order entry's value must be a boolean
       (Section 3.3.6 of [STRUCTURED-FIELDS]).
 
@@ -118,16 +115,16 @@ Table of Contents
    *  The except entry must only be present if the params entry is also
       present, and the params entry's value is the boolean value true.
 
+   The dictionary may contain entries whose keys are not one of key-
+   order, params, and except, but their meaning is not defined by this
+   specification.  Implementations of this specification will ignore
+   such entries (but future documents may assign meaning to such
+   entries).
+
       |  As always, the authoring conformance requirements are not
       |  binding on implementations.  Implementations instead need to
       |  implement the processing model given by the obtain a URL search
       |  variance algorithm (Section 4.2).
-      |  
-      |  It is possible that a future version of this specification, or
-      |  another specification which extends this one, loosens one or
-      |  more of the authoring conformance requirements, for example, by
-      |  assigning semantics to dictionary keys not defined in this
-      |  specification.
 
 3.  Data model
 
@@ -591,7 +588,7 @@ Index
 
       O
 
-         obtain a URL search variance  Section 2, Paragraph 4.1;
+         obtain a URL search variance  Section 2, Paragraph 5.1;
             Section 3, Paragraph 4; *_Section 4.2, Paragraph 1_*
 
       P
