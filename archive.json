@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-09-05T00:32:17.776445+00:00",
+  "timestamp": "2024-09-08T00:36:19.609677+00:00",
   "repo": "jeremyroman/http-no-vary-search",
   "labels": [
     {
@@ -271,24 +271,26 @@
       "id": "PR_kwDOLx27pM55ueD8",
       "title": "Ignore unrecognized dictionary keys",
       "url": "https://github.com/jeremyroman/http-no-vary-search/pull/8",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jeremyroman",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Addresses #6.",
       "createdAt": "2024-08-28T15:20:26Z",
-      "updatedAt": "2024-08-29T03:40:42Z",
+      "updatedAt": "2024-09-06T18:13:09Z",
       "baseRepository": "jeremyroman/http-no-vary-search",
       "baseRefName": "main",
       "baseRefOid": "d6c5beac723e9416ca3c7fdd1313b668d3d1bf01",
       "headRepository": "jeremyroman/http-no-vary-search",
       "headRefName": "nvs-ignore-unrecognized-keys",
-      "headRefOid": "5f70b0dc7532a1034a7551a298cd132431c7d133",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "20430896887344d5231b7b8ac8a6459481eab68a",
+      "closedAt": "2024-09-06T18:13:09Z",
+      "mergedAt": "2024-09-06T18:13:09Z",
+      "mergedBy": "jeremyroman",
+      "mergeCommit": {
+        "oid": "da1986358a94b4321d8bb56bbe1cee67f5e423c5"
+      },
       "comments": [
         {
           "author": "jeremyroman",
@@ -329,6 +331,26 @@
               "body": "This is helpful as far as framing goes, but it is a bit of a forward-looking statement.\r\n\r\nThe pattern I've seen more often is \"Search variance MAY contain parameters other than those listed in this specification.  A recipient MUST ignore any parameter that it does not understand.\"",
               "createdAt": "2024-08-29T03:40:38Z",
               "updatedAt": "2024-08-29T03:40:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOLx27pM6ITt7D",
+          "commit": {
+            "abbreviatedOid": "5f70b0d"
+          },
+          "author": "jeremyroman",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-09-06T17:55:15Z",
+          "updatedAt": "2024-09-06T17:55:15Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "I guess where I struggle is that a strict reading of that would imply that senders can add their own arbitrary data to the header, confident that it will be ignored by recipients -- but in fact in the future those values may become meaningful, so it's unwise for authors to do so.\r\n\r\nTried again to compromise by removing it from the list of authoring requirements proper, but preserving a note that other keys are scary to use.",
+              "createdAt": "2024-09-06T17:55:15Z",
+              "updatedAt": "2024-09-06T17:55:15Z"
             }
           ]
         }
